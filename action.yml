@@ -24,6 +24,7 @@ runs:
     - name: Install pipenv
       run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
       shell: sh
+      working-directory: ${{ github.action_path }}
 
     - name: Install packages
       run: pipenv install
