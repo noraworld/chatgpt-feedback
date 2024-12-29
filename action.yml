@@ -1,0 +1,40 @@
+name: ChatGPT Feedback
+author: noraworld
+
+inputs:
+  prompt:
+    required: false
+    default: You are a helpful assistant.
+  text_before_result:
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version-file: '.python-version'
+        cache: 'pipenv'
+
+    - name: Install pipenv
+      run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+
+    - name: Install packages
+      run: pipenv install
+      shell: sh
+      working-directory: ${{ github.action_path }}
+
+    - name: Create chat completion
+      run: pipenv run python ${{ github.action_path }}/app.py
+      shell: sh
+      env:
+        PROMPT: ${{ inputs.prompt }}
+        COMMENT: ${{ github.event.comment.body }}
+        TEXT_BEFORE_RESULT: ${{ inputs.text_before_result }}
+        ISSUE_NUMBER: ${{ github.event.issue.number }}
+        REPOSITORY: ${{ github.repository }}
