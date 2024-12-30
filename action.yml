@@ -33,9 +33,8 @@ runs:
       working-directory: ${{ github.action_path }}
 
     - name: Create chat completion
-      run: pipenv run python ${{ github.action_path }}/app.py
+      run: PIPENV_PIPFILE=${{ github.action_path }}/Pipfile pipenv run python ${{ github.action_path }}/app.py
       shell: sh
-      working-directory: ${{ github.action_path }}
       env:
         PROMPT: ${{ inputs.prompt }}
         COMMENT: ${{ github.event.comment.body }}
