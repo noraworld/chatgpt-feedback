@@ -2,6 +2,9 @@ name: ChatGPT Feedback
 author: noraworld
 
 inputs:
+  api_key_name:
+    required: false
+    default: CHATGPT_API_KEY
   prompt:
     required: false
     default: You are a helpful assistant.
@@ -36,6 +39,7 @@ runs:
       run: PIPENV_PIPFILE=${{ github.action_path }}/Pipfile pipenv run python ${{ github.action_path }}/app.py
       shell: sh
       env:
+        API_KEY_NAME: ${{ inputs.api_key_name }}
         PROMPT: ${{ inputs.prompt }}
         COMMENT: ${{ github.event.comment.body }}
         TEXT_BEFORE_RESULT: ${{ inputs.text_before_result }}

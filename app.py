@@ -3,7 +3,7 @@ import subprocess
 from openai import OpenAI
 
 client = OpenAI(
-    api_key = os.getenv('CHATGPT_API_KEY')
+    api_key = os.getenv(os.getenv('API_KEY_NAME'))
 )
 
 completion = client.chat.completions.create(
