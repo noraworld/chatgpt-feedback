@@ -4,7 +4,7 @@ import sys
 from openai import OpenAI
 
 client = OpenAI(
-    api_key = os.getenv(os.getenv('API_KEY_NAME'))
+    api_key = os.getenv('CHATGPT_API_KEY')
 )
 
 completion = client.chat.completions.create(
