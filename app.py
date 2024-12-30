@@ -39,6 +39,7 @@ command = [
     os.getenv('REPOSITORY')
 ]
 
+print(f"DEBUG: comment_with_feedback = {comment_with_feedback}")
 result = subprocess.run(command, text = True)
 
 if result.returncode != 0:
