@@ -27,19 +27,21 @@ comment_with_feedback = f"""\
 {os.getenv('TEXT_BEFORE_RESULT')}
 {completion.choices[0].message.content}"""
 
-command = [
-    "gh",
-    "issue",
-    "comment",
-    os.getenv('ISSUE_NUMBER'),
-    "--edit-last",
-    "--body",
-    comment_with_feedback,
-    "--repo",
-    os.getenv('REPOSITORY')
-]
+if os.getenv('DRY_RUN') != 'true':
+    command = [
+        "gh",
+        "issue",
+        "comment",
+        os.getenv('ISSUE_NUMBER'),
+        "--edit-last",
+        "--body",
+        comment_with_feedback,
+        "--repo",
+        os.getenv('REPOSITORY')
+    ]
 
-result = subprocess.run(command, text = True)
-
-if result.returncode != 0:
-    sys.exit(f"exit status is {result.returncode}")
+    result = subprocess.run(command, text = True)
+    if result.returncode != 0:
+        sys.exit(f"exit status is {result.returncode}")
+else:
+    print(comment_with_feedback)
