@@ -19,6 +19,7 @@ runs:
       uses: actions/setup-python@v5
       with:
         python-version-file: ${{ github.action_path }}/.python-version
+        # I have no idea how to enable the cache when this action is called from another repository.
         # cache: 'pipenv'
         # cache-dependency-path: ${{ github.action_path }}/Pipfile.lock
 
