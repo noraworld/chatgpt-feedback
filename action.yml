@@ -45,4 +45,3 @@ runs:
         TEXT_BEFORE_RESULT: ${{ inputs.text_before_result }}
         ISSUE_NUMBER: ${{ github.event.issue.number }}
         REPOSITORY: ${{ github.repository }}
-        GH_TOKEN: ${{ github.token }}
