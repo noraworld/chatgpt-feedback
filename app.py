@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 from openai import OpenAI
 
 client = OpenAI(
@@ -40,4 +41,5 @@ command = [
 
 result = subprocess.run(command, text = True)
 
-print(result.returncode)
+if result.returncode != 0:
+    sys.exit(f"exit status is {result.returncode}")
