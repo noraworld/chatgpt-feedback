@@ -38,3 +38,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }} # ${{ github.token }} is not sufficient
           CHATGPT_API_KEY: ${{ secrets.CHATGPT_API_KEY }}
 ```
+
+## Development
+```shell
+cp .env.sample .env
+pip install pipenv
+pipenv install
+pipenv run python app.py
+```
