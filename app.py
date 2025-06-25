@@ -19,5 +19,9 @@ completion = client.chat.completions.create(
     ]
 )
 
+dirpath = os.path.dirname(os.getenv('OUTPUT_FILE'))
+if dirpath:
+    os.makedirs(dirpath, exist_ok=True)
+
 with open(os.getenv('OUTPUT_FILE'), 'w', encoding='utf-8') as f:
     f.write(completion.choices[0].message.content)
