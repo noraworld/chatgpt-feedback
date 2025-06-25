@@ -7,6 +7,12 @@ client = OpenAI(
     api_key = os.getenv('CHATGPT_API_KEY')
 )
 
+def ready():
+    if type(os.getenv('DRY_RUN')) is str and os.getenv('DRY_RUN').lower() == 'true':
+        return False
+    else:
+        return True
+
 completion = client.chat.completions.create(
     model = "gpt-4o",
     messages = [
@@ -27,7 +33,7 @@ comment_with_feedback = f"""\
 {os.getenv('TEXT_BEFORE_RESULT')}
 {completion.choices[0].message.content}"""
 
-if os.getenv('DRY_RUN') != 'true':
+if ready() is True:
     command = [
         "gh",
         "issue",
