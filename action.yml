@@ -2,12 +2,17 @@ name: ChatGPT Feedback
 author: noraworld
 
 inputs:
-  prompt:
+  model:
+    required: false
+    default: gpt-4o
+  system_prompt:
     required: false
     default: You are a helpful assistant.
-  text_before_result:
+  user_prompt:
+    required: true
+  output_file:
     required: false
-    default: ""
+    default: chatgpt_result.txt
 
 runs:
   using: "composite"
@@ -38,8 +43,7 @@ runs:
       shell: sh
       env:
         PIPENV_PIPFILE: ${{ github.action_path }}/Pipfile
-        PROMPT: ${{ inputs.prompt }}
-        COMMENT: ${{ github.event.comment.body }}
-        TEXT_BEFORE_RESULT: ${{ inputs.text_before_result }}
-        ISSUE_NUMBER: ${{ github.event.issue.number }}
-        REPOSITORY: ${{ github.repository }}
+        MODEL: ${{ inputs.model }}
+        SYSTEM_PROMPT: ${{ inputs.system_prompt }}
+        USER_PROMPT: ${{ inputs.user_prompt }}
+        OUTPUT_FILE: ${{ inputs.output_file }}

@@ -1,53 +1,23 @@
 import os
-import subprocess
-import sys
 from openai import OpenAI
 
 client = OpenAI(
     api_key = os.getenv('CHATGPT_API_KEY')
 )
 
-def ready():
-    if type(os.getenv('DRY_RUN')) is str and os.getenv('DRY_RUN').lower() == 'true':
-        return False
-    else:
-        return True
-
 completion = client.chat.completions.create(
-    model = "gpt-4o",
+    model = os.getenv('MODEL'),
     messages = [
         {
             "role": "system",
-            "content": os.getenv('PROMPT')
+            "content": os.getenv('SYSTEM_PROMPT')
         },
         {
             "role": "user",
-            "content": os.getenv('COMMENT')
+            "content": os.getenv('USER_PROMPT')
         }
     ]
 )
 
-comment_with_feedback = f"""\
-{os.getenv('COMMENT')}
-
-{os.getenv('TEXT_BEFORE_RESULT')}
-{completion.choices[0].message.content}"""
-
-if ready() is True:
-    command = [
-        "gh",
-        "issue",
-        "comment",
-        os.getenv('ISSUE_NUMBER'),
-        "--edit-last",
-        "--body",
-        comment_with_feedback,
-        "--repo",
-        os.getenv('REPOSITORY')
-    ]
-
-    result = subprocess.run(command, text = True)
-    if result.returncode != 0:
-        sys.exit(f"exit status is {result.returncode}")
-else:
-    print(comment_with_feedback)
+with open(os.getenv('OUTPUT_FILE'), 'w', encoding='utf-8') as f:
+    f.write(completion.choices[0].message.content)
