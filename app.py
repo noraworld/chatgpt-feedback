@@ -24,4 +24,7 @@ if dirpath:
     os.makedirs(dirpath, exist_ok=True)
 
 with open(os.getenv('OUTPUT_FILE'), 'w', encoding='utf-8') as f:
-    f.write(completion.choices[0].message.content)
+    if os.getenv('TRAILING_NEWLINE') == 'true':
+        f.write(completion.choices[0].message.content.rstrip(os.linesep) + os.linesep)
+    else:
+        f.write(completion.choices[0].message.content)

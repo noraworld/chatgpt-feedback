@@ -13,6 +13,9 @@ inputs:
   output_file:
     required: false
     default: chatgpt_result.txt
+  trailing_newline:
+    required: false
+    default: false
 
 runs:
   using: "composite"
@@ -47,3 +50,4 @@ runs:
         SYSTEM_PROMPT: ${{ inputs.system_prompt }}
         USER_PROMPT: ${{ inputs.user_prompt }}
         OUTPUT_FILE: ${{ inputs.output_file }}
+        TRAILING_NEWLINE: ${{ inputs.trailing_newline }}
