@@ -13,6 +13,12 @@ inputs:
   output_file:
     required: false
     default: chatgpt_result.txt
+  text_before_result:
+    required: false
+    default: ''
+  text_after_result:
+    required: false
+    default: ''
   trailing_newline:
     required: false
     default: false
@@ -50,4 +56,6 @@ runs:
         SYSTEM_PROMPT: ${{ inputs.system_prompt }}
         USER_PROMPT: ${{ inputs.user_prompt }}
         OUTPUT_FILE: ${{ inputs.output_file }}
+        TEXT_BEFORE_RESULT: ${{ inputs.text_before_result }}
+        TEXT_AFTER_RESULT: ${{ inputs.text_after_result }}
         TRAILING_NEWLINE: ${{ inputs.trailing_newline }}
